@@ -19,11 +19,11 @@ _(More on this later.)_
 
 ### Implementation
 
-VM initial setup:
+**VM initial setup:**
 - I used a SanDisk Usb 3.0 for my virtual machine. It's not the best but I had it lying around and it worked out fine.
 - I allocated 32gb to have plenty of room in case I do the bonus part & need more space than expected.
 
-Disk partitioning:
+**Disk partitioning:**
 - `/boot` gets its own physical volume, whereas root (`/`) and other directories will live under the same LV (`sda5`).
 - After reading so many forum discussions and blog posts ([1](https://www.reddit.com/r/linuxquestions/comments/w2vsgs/what_space_should_i_allocate_to_root_and_home/), [2](https://dev.to/jabulani_meki_a537563a784/i-just-did-manual-partitioning-in-linux-and-it-wasnt-scary-at-all-36ne), [3](https://www.reddit.com/r/linux4noobs/comments/jeo8dd/how_much_space_should_i_allocate_for_each/), [4](https://www.reddit.com/r/linux4noobs/comments/mqf7kp/what_is_the_difference_between_boot_and_bootefi/), [5](https://www.reddit.com/r/linuxquestions/comments/17bon4l/separate_partitions_for_var_tmp_and_home_why/), [6]()), the general consensus for the initial partitioning seems to be:
     - No separate partitions for `/bin`, `/usr`, `/dev` or `/media`, `/lib`.

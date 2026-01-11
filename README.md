@@ -55,6 +55,7 @@ _(More on this later.)_
 - [The Linux Filesystem Explained (The Linux Foundation)](https://www.linuxfoundation.org/blog/blog/classic-sysadmin-the-linux-filesystem-explained)
 - [Swap space (Red Hat docs)](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/7/html/storage_administration_guide/ch-swapspace#tb-recommended-system-swap-space)
 - [FHS (Wikipedia)](https://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard)
+- [OpenSSH (Ubuntu docs)](https://help.ubuntu.com/community/SSH/OpenSSH/Configuring)
 
 
 ## Project Description

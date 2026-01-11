@@ -29,25 +29,29 @@ sda5	/tmp		2
 ---
 ## INSTALLATIONS
 
-install sudo by running `su -` (and inserting password for root)
-the `-` flag sets the correct path variables too so it's important
-then `usermod -aG sudo egaziogl` for allowing sudo access
+install sudo by running `su -` (and inserting password for root)  
+the `-` flag sets the correct path variables too so it's important  
+then `usermod -aG sudo egaziogl` for allowing sudo access  
 while you're at it, `groupadd user42` and `usermod -aG user42 egaziogl`
-if you don't have a user, `useradd`
-`exit` to leave the root shell
-(you can use whereis to check if it exists)
+if you don't have a user, `useradd`  
+`exit` to leave the root shell  
+(you can use whereis to check if it exists)  
 
-I went on and `sudo install man-db` as well, so I could read man pages directly
-then `sudo install openssh-server`
-and check with `sudo service ssh status`
-
+I went on and `sudo install man-db` as well, so I could read man pages directly  
+then `sudo install openssh-server`  
+and check with `sudo service ssh status`.  
 
 ---
 ## CONFIGURATION
 
-SSH (located at `/etc/ssh/sshd_config`):  
+SSH Server (located at `/etc/ssh/sshd_config`):
 - Port: 4242
 - PermitRootLogin: no
+
+SSH Client (located at `/etc/ssh/ssh_config`):
+- Port: 4242
+
+> restart the ssh service: `sudo service ssh restart && sudo service ssh status | grep 4242`
 
 ---
 ## Study notes

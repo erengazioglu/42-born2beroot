@@ -82,6 +82,9 @@ To test, switch to root, then `useradd test`, and try out some passwords.
 
 ### SSH
 
+To check what ports are in use:
+`netstat -an | grep 4242` (n for numeric)
+
 SSH Server (located at `/etc/ssh/sshd_config`):
 - Port: 4242
 - PermitRootLogin: no
@@ -91,7 +94,8 @@ SSH Client (located at `/etc/ssh/ssh_config`):
 
 > restart the ssh service: `sudo service ssh restart && sudo service ssh status | grep 4242`
 
-It didn't work from inside WSL but from powershell I was able to run `ssh -p 4242 egaziogl@localhost` and get access.
+It didn't work from inside WSL but from powershell I was able to run `ssh -p 4242 egaziogl@localhost` and get access.  
+On the 42 computer it didn't work either (because 4242 was in use) so I changed the host to 42422.
 
 ### UFW (Firewall)
 
@@ -129,6 +133,34 @@ You can check the logs by running:
 ```bash
 sudo sudoreplay -d /var/log/sudo/ -l    # lists sudo logs
 sudo sudoreplay 00/00/0A                # example
+```
+
+### Monitoring script (Cron job)
+
+`uname -a` or `cat /proc/version` for CPU architecture
+`lscpu` or `cat /proc/cpuinfo` for all cpu details
+-> grep "physical id" for physical cores, "processor" for virutal cores  
+-> then wc -l for word count (= count)
+
+for CPU/vCPU:
+- `nproc` for vCPU count
+- `lscpu` for CPU details
+- `lscpu -p` for vCPUs 
+
+for RAM:
+- free --mega | grep Mem | awk '{printf "~ Memory (in use/total): %d/%dmb (%.1f%%)\n", $3, $2, ($3/$2)*100}'
+
+for disk:
+- df 
+(df stands for disk-free)
+```
+EXAMPLE OUTPUT
+
+~ Architecture: Linux egaziogl42 6.12.63+deb13-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.12.63-1 (2025-12-30) x86_64 GNU/Linux 
+~ Physical Processors (CPU): 2
+~ Virtual Processors (vCPU): 2
+~ Memory used: 261/773mb ()
+
 ```
 
 ---

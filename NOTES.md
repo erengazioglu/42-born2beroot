@@ -41,8 +41,12 @@ I went on and `sudo install man-db` as well, so I could read man pages directly
 then `sudo install openssh-server`  
 and check with `sudo service ssh status`.  
 
+Installed `iptables` to make sure there are no firewall blocking issues.
+
 ---
 ## CONFIGURATION
+
+### SSH
 
 SSH Server (located at `/etc/ssh/sshd_config`):
 - Port: 4242
@@ -53,12 +57,53 @@ SSH Client (located at `/etc/ssh/ssh_config`):
 
 > restart the ssh service: `sudo service ssh restart && sudo service ssh status | grep 4242`
 
+It didn't work from inside WSL but from powershell I was able to run `ssh -p 4242 egaziogl@localhost` and get access.
+
+### Firewall
+
+`sudo apt install ufw` and `sudo ufw enable`.  
+Now `ssh -p 4242 egaziogl@localhost` will timeout.  
+
+`sudo ufw allow 4242` will create an ALLOW rule.  
+After which, it will be possible to connect with ssh again.  
+`sudo ufw status` to check.
+
+### Hostname
+
+- Main article: [Debian Handbook](https://debian-handbook.info/browse/stable/sect.hostname-name-service.html)
+
+### Sudo rules & logging
+
+- Main article: [Debian Wiki](https://wiki.debian.org/sudo/)
+- Main article: [Cheatsheet (AskApache)](https://www.askapache.com/s/u.askapache.com/2012/09/sudoers-defaults-cheatsheet.txt)
+- `man sudoers`
+- Side article: [Red Hat Docs](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/6/html/identity_management_guide/defining-sudorules)
+
+Any file in `/etc/sudoers.d` without a '.' or not ending with '~' will be parsed for config. I set the following:
+
+```
+Defaults log_input
+Defaults log_output
+Defaults logfile=/var/log/sudo/log42
+Defaults iolog_dir=/var/log/sudo/
+Defaults badpass_message="Duuuuude, that's not your password. Why don't you, like, type properly or something?"
+Defaults passwd_tries=3
+Defaults requiretty
+```
+
+You can check the logs by running: 
+```bash
+sudo sudoreplay -d /var/log/sudo/ -l    # lists sudo logs
+sudo sudoreplay 00/00/0A                # example
+```
+
 ---
 ## Study notes
 
 ### TTY (Teletypewriter)
 
-The interface after installing debian is a TTY, which means there's no "scrollback" buffer. 
+The interface after installing debian is a TTY, which means there's no "scrollback" buffer.  
+Pipe commands into `less` to be able to read their input.
 
 ### Apt
 

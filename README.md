@@ -27,7 +27,7 @@ _(More on this later.)_
 - `/boot` gets its own physical volume, whereas root (`/`) and other directories will live under the same LV (`sda5`).
 - After reading so many forum discussions and blog posts ([1](https://www.reddit.com/r/linuxquestions/comments/w2vsgs/what_space_should_i_allocate_to_root_and_home/), [2](https://dev.to/jabulani_meki_a537563a784/i-just-did-manual-partitioning-in-linux-and-it-wasnt-scary-at-all-36ne), [3](https://www.reddit.com/r/linux4noobs/comments/jeo8dd/how_much_space_should_i_allocate_for_each/), [4](https://www.reddit.com/r/linux4noobs/comments/mqf7kp/what_is_the_difference_between_boot_and_bootefi/), [5](https://www.reddit.com/r/linuxquestions/comments/17bon4l/separate_partitions_for_var_tmp_and_home_why/), [6]()), the general consensus for the initial partitioning seems to be:
     - No separate partitions for `/bin`, `/usr`, `/dev` or `/media`, `/lib`.
-    - Yes for `/swap`, `/home`, `/var`, `/srv`, yes `/tmp`.
+    - Yes for `/swap`, `/home`, `/var`, `/srv`, `/tmp`.
     - a separate LV for `/boot` (EFI partition),
     - 2Gs for `/swap` (4 if extra performance is needed), 
     - a set amount of Gs for `/` (mileage may vary depending on necessity, but 10G seems enough), 
@@ -55,7 +55,9 @@ _(More on this later.)_
 - [The Linux Filesystem Explained (The Linux Foundation)](https://www.linuxfoundation.org/blog/blog/classic-sysadmin-the-linux-filesystem-explained)
 - [Swap space (Red Hat docs)](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/7/html/storage_administration_guide/ch-swapspace#tb-recommended-system-swap-space)
 - [FHS (Wikipedia)](https://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard)
-- [OpenSSH (Ubuntu docs)](https://help.ubuntu.com/community/SSH/OpenSSH/Configuring)
+- [OpenSSH (Ubuntu docs)](https://help.ubuntu.com/community/SSH/OpenSSH/Configuring)  
+- [What is a computer port? (Cloudflare)](https://www.cloudflare.com/learning/network-layer/what-is-a-computer-port/)
+- [Debian Handbook](https://debian-handbook.info/browse/stable/sect.hostname-name-service.html)
 
 
 ## Project Description

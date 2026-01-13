@@ -9,8 +9,8 @@ non-root user full name: Eren Gazioglu
 ---
 ## USERS
 
-root: born42beroot (actually should be Born42BeRoot)
-egaziogl: toogood2beroot (actually should be TooGood2BeRoot)
+root: Born42BeR00t!
+egaziogl: TooGood2BeRoot
 encrypted partition: 1337LVMpassword!
 
 
@@ -46,6 +46,40 @@ Installed `iptables` to make sure there are no firewall blocking issues.
 ---
 ## CONFIGURATION
 
+### Passwords
+
+- Main article: `man 5 login.defs`
+- Main article: [Configure minimum password length (Linux Audit)](https://linux-audit.com/authentication/configure-the-minimum-password-length-on-linux-systems/#login-settings)
+- Side article: [Pluggable authentication modules](https://www.redhat.com/en/blog/pluggable-authentication-modules-pam)
+
+Change passwords for the current user with just `passwd`.  
+Change it for root with `su && passwd`.  
+You can also run `passwd <username>` as root to change someone else's.
+
+- `/etc/login.defs` hold some config but just for password age.
+- `/etc/pam.d/common-password` is where modules used for password settings are defined. After installing pam_pwquality, you can run `grep pwquality /etc/pam.d/common-password` to see if it's managing the passwords.
+- `pwquality` is a package to configure password quality settings: `sudo apt install libpam-pwquality` for install, `sudo vim /etc/security/pwquality.conf` for configuration
+- For separate rules for root, I wrote into **/etc/pam.d/common_password**:
+```
+password [success=1 default=ignore] pam_succeed_if.so uid != 0
+password requisite pam_pwquality.so difok=0
+password requisite pam_pwquality.so difok=7
+```
+and in **/etc/security/pwquality.conf**:
+```
+minlen = 10
+dcredit = -1
+ucredit = -1
+lcredit = -1 
+maxrepeat = 3
+usercheck = 1
+retry = 3
+enforce_for_root
+```
+
+To test, switch to root, then `useradd test`, and try out some passwords.  
+
+
 ### SSH
 
 SSH Server (located at `/etc/ssh/sshd_config`):
@@ -59,7 +93,7 @@ SSH Client (located at `/etc/ssh/ssh_config`):
 
 It didn't work from inside WSL but from powershell I was able to run `ssh -p 4242 egaziogl@localhost` and get access.
 
-### Firewall
+### UFW (Firewall)
 
 `sudo apt install ufw` and `sudo ufw enable`.  
 Now `ssh -p 4242 egaziogl@localhost` will timeout.  
